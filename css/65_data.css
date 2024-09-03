@@ -3,7 +3,6 @@
 
 .qa-header-icon .qaItem-fill,
 .layer-keepRight .qaItem .qaItem-fill,
-.layer-improveOSM .qaItem .qaItem-fill,
 .layer-osmose .qaItem .qaItem-fill {
     stroke: #333;
     stroke-width: 1.3px;  /* NOTE: likely a better way to scale the icon stroke */
@@ -127,30 +126,6 @@
     color: #c35;
 }
 
-/* ImproveOSM Issues
-------------------------------------------------------- */
-
-.improveOSM.itemType-ow {   /* missing one way */
-    color: #1E90FF;
-}
-
-.improveOSM.itemType-mr-road {   /* missing road */
-    color: #B452CD;
-}
-.improveOSM.itemType-mr-path {   /* missing path */
-    color: #A0522D;
-}
-.improveOSM.itemType-mr-parking {   /* missing parking */
-    color: #EEEE00;
-}
-.improveOSM.itemType-mr-both {   /* missing road+parking */
-    color: #FFA500;
-}
-
-.improveOSM.itemType-tr {   /* missing turn restriction */
-    color: #EC1C24;
-}
-
 /* Custom Map Data (geojson, gpx, kml, vector tile) */
 .layer-mapdata {
     pointer-events: none;
@@ -198,11 +173,11 @@
     dominant-baseline: middle;
 }
 .layer-mapdata text.label {
-    fill: #ff26d4;
+    fill: #ddd;
 }
 .layer-mapdata text.label.hover,
 .layer-mapdata text.label.selected {
-    fill: #f6634f;
+    fill: #fff;
 }
 .layer-mapdata text.label-halo {
     opacity: 0.7;

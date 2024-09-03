@@ -1,5 +1,4 @@
 import {
-    event as d3_event,
     select as d3_select
 } from 'd3-selection';
 
@@ -8,12 +7,11 @@ import { behaviorHover } from '../behavior/hover';
 import { behaviorLasso } from '../behavior/lasso';
 import { behaviorSelect } from '../behavior/select';
 
-import { t } from '../util/locale';
+import { t } from '../core/localizer';
 import { services } from '../services';
 import { modeBrowse } from './browse';
 import { modeDragNode } from './drag_node';
 import { modeDragNote } from './drag_note';
-import { uiImproveOsmEditor } from '../ui/improveOSM_editor';
 import { uiKeepRightEditor } from '../ui/keepRight_editor';
 import { uiOsmoseEditor } from '../ui/osmose_editor';
 import { utilKeybinding } from '../util';
@@ -30,16 +28,6 @@ export function modeSelectError(context, selectedErrorID, selectedErrorService) 
     var errorService = services[selectedErrorService];
     var errorEditor;
     switch (selectedErrorService) {
-        case 'improveOSM':
-            errorEditor = uiImproveOsmEditor(context)
-            .on('change', function() {
-                context.map().pan([0,0]);  // trigger a redraw
-                var error = checkSelectedID();
-                if (!error) return;
-                context.ui().sidebar
-                    .show(errorEditor.error(error));
-            });
-            break;
         case 'keepRight':
             errorEditor = uiKeepRightEditor(context)
             .on('change', function() {
@@ -114,7 +102,7 @@ export function modeSelectError(context, selectedErrorID, selectedErrorService) 
 
 
         // class the error as selected, or return to browse mode if the error is gone
-        function selectError(drawn) {
+        function selectError(d3_event, drawn) {
             if (!checkSelectedID()) return;
 
             var selection = context.surface()
@@ -124,7 +112,7 @@ export function modeSelectError(context, selectedErrorID, selectedErrorService) 
                 // Return to browse mode if selected DOM elements have
                 // disappeared because the user moved them out of view..
                 var source = d3_event && d3_event.type === 'zoom' && d3_event.sourceEvent;
-                if (drawn && source && (source.type === 'mousemove' || source.type === 'touchmove')) {
+                if (drawn && source && (source.type === 'pointermove' || source.type === 'mousemove' || source.type === 'touchmove')) {
                     context.enter(modeBrowse(context));
                 }
 
@@ -137,7 +125,7 @@ export function modeSelectError(context, selectedErrorID, selectedErrorService) 
         }
 
         function esc() {
-            if (d3_select('.combobox').size()) return;
+            if (context.container().select('.combobox').size()) return;
             context.enter(modeBrowse(context));
         }
     };

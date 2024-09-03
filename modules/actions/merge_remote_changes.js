@@ -1,6 +1,5 @@
 import deepEqual from 'fast-deep-equal';
 import { diff3Merge } from 'node-diff3';
-import { escape } from 'lodash';
 
 import { t } from '../core/localizer';
 import { actionDeleteMultiple } from './delete_multiple';
@@ -15,7 +14,7 @@ export function actionMergeRemoteChanges(id, localGraph, remoteGraph, discardTag
 
 
     function user(d) {
-        return (typeof formatUser === 'function') ? formatUser(d) : escape(d);
+        return (typeof formatUser === 'function') ? formatUser(d) : encodeURI(d);
     }
 
 

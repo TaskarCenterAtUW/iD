@@ -1,14 +1,4 @@
 {
-  "improveOSM": {
-    "icons": {
-      "ow": "fas-long-arrow-alt-right",
-      "mr-both": "maki-car",
-      "mr-parking": "maki-parking",
-      "mr-path": "maki-shoe",
-      "mr-road": "maki-car",
-      "tr": "temaki-junction"
-    }
-  },
   "osmose": {
     "icons": {
       "0-1": "maki-home",
@@ -118,7 +108,6 @@
       "8300-118": "fas-tachometer-alt",
       "8300-119": "fas-tachometer-alt",
       "8300-120": "fas-tachometer-alt",
-      "8360-1": "temaki-bench",
       "8360-2": "maki-bicycle",
       "8360-3": "temaki-security_camera",
       "8360-4": "temaki-fire_hydrant",

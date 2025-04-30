@@ -25,7 +25,7 @@ import { utilKeybinding, utilRebind, utilStringQs, utilCleanOsmString } from '..
 
 export function coreContext() {
   const dispatch = d3_dispatch('enter', 'exit', 'change');
-  let context = utilRebind({}, dispatch, 'on');
+  const context = {};
   let _deferred = new Set();
 
   context.version = packageJSON.version;
@@ -118,12 +118,6 @@ export function coreContext() {
   function afterLoad(cid, callback) {
     return (err, result) => {
       if (err) {
-        // 400 Bad Request, 401 Unauthorized, 403 Forbidden..
-        if (err.status === 400 || err.status === 401 || err.status === 403) {
-          if (_connection) {
-            _connection.logout();
-          }
-        }
         if (typeof callback === 'function') {
           callback(err);
         }
@@ -219,22 +213,21 @@ export function coreContext() {
     });
   };
 
-  context.zoomToNote = (noteId, zoomTo) => {
+  context.moveToNote = (noteId, moveTo) => {
     context.loadNote(noteId, (err, result) => {
       if (err) return;
       const entity = result.data.find(e => e.id === noteId);
-      if (entity) {
-        // zoom to, used note loc
-        const note = services.osm.getNote(noteId);
-        if (zoomTo !== false) {
-          context.map().centerZoom(note.loc,15);
-        }
-        // open note layer
-        const noteLayer = context.layers().layer('notes');
-        noteLayer.enabled(true);
-        // select the note
-        context.enter(modeSelectNote(context, noteId));
+      if (!entity) return;
+      // zoom to, used note loc
+      const note = services.osm.getNote(noteId);
+      if (moveTo !== false) {
+        context.map().center(note.loc);
       }
+      // open note layer
+      const noteLayer = context.layers().layer('notes');
+      noteLayer.enabled(true);
+      // select the note
+      context.enter(modeSelectNote(context, noteId));
     });
   };
 
@@ -591,5 +584,5 @@ export function coreContext() {
     }
   };
 
-  return context;
+  return utilRebind(context, dispatch, 'on');
 }

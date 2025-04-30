@@ -1,8 +1,7 @@
 # Contributing to iD
 
 Thinking of contributing to iD? High five! There are plenty of ways to get involved.
-You don't need to know the first thing about programming (though it's always a
-great time to learn!)
+You don't need to know anything about programming (though it's always a great time to learn!).
 
 Everyone involved in the iD project is subject to the [Code of Conduct](CODE_OF_CONDUCT.md).
 Please take a moment to read it before proceeding, it's short and simple. We want
@@ -12,7 +11,7 @@ everyone to feel comfortable contributing to iD.
 ## Submitting Issues
 
 We'd love to hear your feedback about iD. Please [search existing issues](https://github.com/search?l=&q=repo%3Aopenstreetmap%2FiD&type=Issues)
-before [opening a new one](https://github.com/openstreetmap/iD/issues/new). Many bugs and ideas have already been posted.
+before [opening a new one](https://github.com/openstreetmap/iD/issues/new/choose). Many bugs and ideas have already been posted.
 
 When reporting a bug:
 
@@ -37,22 +36,22 @@ When requesting a feature:
 
 ### Issue Labels
 
-We use GitHub labels to keep track of issues.  Some guidelines:
+We use GitHub labels to keep track of issues. Some guidelines:
 
 Green labels are for **action items**. Jump in and start working!
-* <sub>[![good-first-issue][good-first-issue]][good-first-issue_link]</sub> -
-Best for new contributors.  No experience necessary!
+* <sub>[![new-contributor-opportunity][new-contributor-opportunity]][new-contributor-opportunity_link]</sub> -
+Best for new contributors. Little experience necessary!
 * <sub>[![help-wanted][help-wanted]][help-wanted_link]</sub> -
 For more intermediate contributors, probably requires investigation or knowledge of iD code.
 * <sub>[![priority][priority]][priority_link]</sub> -
 Issues that have a big impact or matter most to _new mappers_.
 <br/>(There should probably be 10 or fewer "priority" items.)
 
-[good-first-issue]: http://labl.es/svg?text=good%20first%20issue&bgcolor=0e8a16
+[new-contributor-opportunity]: http://labl.es/svg?text=new%20contributor%20opportunity&bgcolor=0e8a16
 [help-wanted]: http://labl.es/svg?text=help%20wanted&bgcolor=0e8a16
 [priority]: http://labl.es/svg?text=priority&bgcolor=0e8a16
 
-[good-first-issue_link]: https://github.com/openstreetmap/iD/issues?q=is%3Aopen+is%3Aissue+label%3A%22good%20first%20issue%22
+[new-contributor-opportunity_link]: https://github.com/openstreetmap/iD/issues?q=is%3Aopen+is%3Aissue+label%3A%22new%20contributor%20opportunity%22
 [help-wanted_link]: https://github.com/openstreetmap/iD/issues?q=is%3Aopen+is%3Aissue+label%3A%22help%20wanted%22
 [priority_link]: https://github.com/openstreetmap/iD/issues?q=is%3Aopen+is%3Aissue+label%3Apriority
 
@@ -231,7 +230,7 @@ The translations for presets, [maintained in the id-tagging-schema repository](h
 preset fields, and lists of search terms. You do _not_ need to translate the
 search terms literally -- use a set of synonyms and related terms appropriate
 to the target language, separated by commas.
-For more information on translating the presets [please see this id-tagging-schema contribution guide](https://github.com/openstreetmap/id-tagging-schema/blob/main/CONTRIBUTING.md#translating). 
+For more information on translating the presets [please see this id-tagging-schema contribution guide](https://github.com/openstreetmap/id-tagging-schema/blob/main/CONTRIBUTING.md#translating).
 
 You can check your translations on the [development preview site](https://ideditor.netlify.app),
 which is updated every time we change the `develop` branch.
@@ -278,11 +277,10 @@ only display them in the interface through the `t()` function.
 Then, add the new string to `data/core.yaml`. The translation system, Transifex,
 will automatically detect the change.
 
-If you are updating an existing string, update it in `data/core.yaml` and run
-`npm run build` to generate the `en.json` file automatically, then commit both
-modified files.
-
-Use `npm run build` to build the translations with the local changes.
+If you are adding or updating an existing string, update it in `data/core.yaml`
+and run `npm run build` to generate the `en.min.json` file automatically. Only
+commit the `data/core.yaml` file in your pull request. The translation system,
+Transifex, will automatically detect the changes.
 
 `npm run translations` can be used to pull the latest translations from Transifex.
 

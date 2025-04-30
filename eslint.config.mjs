@@ -110,12 +110,16 @@ export default [
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.mocha,
+        ...globals.jest,
+        'before': 'readonly',
+        'after': 'readonly',
         'd3': 'readonly',
         'iD': 'readonly',
+        'vi': 'readonly',
         'sinon': 'readonly',
         'happen': 'readonly',
         'fetchMock': 'readonly',
+        'jsdom': 'readonly',
         'expect': 'writable'
       }
     },

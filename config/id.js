@@ -3,6 +3,7 @@
 // cdns for external data packages
 const presetsCdnUrl = ENV__ID_PRESETS_CDN_URL
   || 'https://cdn.jsdelivr.net/npm/@openstreetmap/id-tagging-schema@{presets_version}/';
+const customPresetsCdnUrl = "https://raw.githubusercontent.com/vindagollc/kepler-map-styles/refs/heads/test-preset/proviso-ai-presets/"
 const ociCdnUrl = ENV__ID_OCI_CDN_URL
   || 'https://cdn.jsdelivr.net/npm/osm-community-index@{version}/';
 const wmfSitematrixCdnUrl = ENV__ID_WMF_SITEMATRIX_CDN_URL
@@ -60,5 +61,6 @@ export {
   osmApiConnections,
   taginfoApiUrl,
   nominatimApiUrl,
-  showDonationMessage
+  showDonationMessage,
+  customPresetsCdnUrl
 };

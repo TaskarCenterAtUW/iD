@@ -158,6 +158,11 @@ export function svgTagClasses() {
         if (qid) {
             classes.push('tag-wikidata');
         }
+        var custom_tag = t['custom:element_type'];
+        if (custom_tag) {
+            classes.push('tag-custom');
+            classes.push('tag-custom-' + custom_tag);
+        }
 
         // ensure that classes for tags keys/values with special characters like spaces
         // are not added to the DOM, because it can cause bizarre issues (#9448)

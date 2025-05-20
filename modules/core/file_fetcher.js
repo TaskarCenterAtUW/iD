@@ -51,6 +51,7 @@ export function coreFileFetcher() {
   // (resolved with the data if we have it already)
   _this.get = (which) => {
     if (_cachedData[which]) {
+      console.log('Using cached data for', which);
       return Promise.resolve(_cachedData[which]);
     }
 
@@ -81,6 +82,7 @@ export function coreFileFetcher() {
           if (!response.ok || !response.json) {
             throw new Error(response.status + ' ' + response.statusText);
           }
+          console.log('Fetching', which, 'from', url);
           if (response.status === 204 || response.status === 205) return;  // No Content, Reset Content
           return response.json();
         })

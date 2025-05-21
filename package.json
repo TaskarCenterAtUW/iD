@@ -1,5 +1,5 @@
 {
-  "name": "@hotosm/id",
+  "name": "@TC/id",
   "version": "2.33.0",
   "description": "A friendly editor for OpenStreetMap",
   "main": "dist/iD.min.js",

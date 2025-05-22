@@ -1,8 +1,23 @@
 {
-  "name": "@TC/id",
+  "name": "gaussian-id",
   "version": "2.33.0",
   "description": "A friendly editor for OpenStreetMap",
   "main": "dist/iD.min.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/iD.min.js"
+    },
+    "./dist/iD.css": {
+      "default": "./dist/iD.css"
+    }
+  },
+  "files": [
+    "dist",
+    "scripts",
+    "config",
+    "svg"
+  ],
   "repository": "github:openstreetmap/iD",
   "homepage": "https://github.com/openstreetmap/iD",
   "bugs": "https://github.com/openstreetmap/iD/issues",

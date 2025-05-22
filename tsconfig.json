@@ -9,7 +9,10 @@
         "target": "esnext",
         "module": "nodenext",
         "moduleResolution": "nodenext",
+        "allowImportingTsExtensions": true,
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true,
         "types": ["vitest/globals", "vitest/jsdom"]
     },
-    "include": ["modules", "test"]
+    "include": ["modules", "test", "types"]
 }

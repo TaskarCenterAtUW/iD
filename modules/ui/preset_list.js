@@ -1,6 +1,6 @@
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { select as d3_select } from 'd3-selection';
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 
 import { presetManager } from '../presets';
 import { t, localizer } from '../core/localizer';

@@ -7,15 +7,21 @@ import browserslistToEsbuild from 'browserslist-to-esbuild';
 let args = parse(process.argv.slice(2), {boolean: true});
 
 const context = await esbuild.context({
-  define: envs,
+  entryPoints: ['./modules/index.js'],
+  outfile: 'dist/iD.min.js',
   bundle: true,
+  minify: true,
   sourcemap: true,
-  entryPoints: ['./modules/id.js'],
-  legalComments: 'none',
+  format: 'esm',
+  platform: 'browser',
+  target: browserslistToEsbuild(),
+  external: ['lodash-es', 'whatwg-fetch', 'exifr', 'alif-toolkit', 'polygon-clipping'],
+  define: {
+    ...envs,
+    __VERSION__: JSON.stringify(pkg.version)
+  },
   logLevel: 'info',
   metafile: true,
-  outfile: 'dist/iD.js',
-  target: browserslistToEsbuild(),
 });
 
 if (args.watch) {

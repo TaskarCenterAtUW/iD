@@ -2,7 +2,7 @@ import {
     select as d3_select
 } from 'd3-selection';
 
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 import { uiToolDrawModes, uiToolNotes, uiToolSave, uiToolSidebarToggle, uiToolUndoRedo } from './tools';
 
 

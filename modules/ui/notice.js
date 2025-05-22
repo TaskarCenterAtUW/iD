@@ -1,4 +1,4 @@
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 
 import { t } from '../core/localizer';
 import { svgIcon } from '../svg/index';

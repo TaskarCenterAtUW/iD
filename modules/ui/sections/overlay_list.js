@@ -1,4 +1,4 @@
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 import { descending as d3_descending, ascending as d3_ascending } from 'd3-array';
 import {
     select as d3_select

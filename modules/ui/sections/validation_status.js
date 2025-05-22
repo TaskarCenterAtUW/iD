@@ -1,4 +1,4 @@
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 
 import { svgIcon } from '../../svg/icon';
 import { prefs } from '../../core/preferences';

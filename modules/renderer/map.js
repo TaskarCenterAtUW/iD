@@ -1,4 +1,4 @@
-import _throttle from 'lodash-es/throttle';
+import _throttle from 'lodash-es/throttle.js';
 
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { interpolate as d3_interpolate } from 'd3-interpolate';

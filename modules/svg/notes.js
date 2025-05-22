@@ -1,4 +1,4 @@
-import _throttle from 'lodash-es/throttle';
+import _throttle from 'lodash-es/throttle.js';
 
 import { select as d3_select } from 'd3-selection';
 import { dispatch as d3_dispatch } from 'd3-dispatch';

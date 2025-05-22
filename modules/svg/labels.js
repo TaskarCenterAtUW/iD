@@ -1,4 +1,4 @@
-import _throttle from 'lodash-es/throttle';
+import _throttle from 'lodash-es/throttle.js';
 
 import { geoPath as d3_geoPath } from 'd3-geo';
 import RBush from 'rbush';

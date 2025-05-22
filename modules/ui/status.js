@@ -1,4 +1,4 @@
-import _throttle from 'lodash-es/throttle';
+import _throttle from 'lodash-es/throttle.js';
 
 import { t } from '../core/localizer';
 import { svgIcon } from '../svg/icon';

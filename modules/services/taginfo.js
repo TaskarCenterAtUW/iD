@@ -1,4 +1,4 @@
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 
 import { json as d3_json } from 'd3-fetch';
 

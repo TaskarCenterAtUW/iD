@@ -1,4 +1,4 @@
-import _throttle from 'lodash-es/throttle';
+import _throttle from 'lodash-es/throttle.js';
 
 import { geoBounds as d3_geoBounds, geoPath as d3_geoPath } from 'd3-geo';
 import { text as d3_text } from 'd3-fetch';

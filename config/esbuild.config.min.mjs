@@ -1,17 +1,24 @@
 import esbuild from 'esbuild';
-import envs from './envs.mjs';
+import fs from 'node:fs';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+import envs from './envs.mjs';
+import { readFileSync } from 'node:fs';
 
-esbuild
-  .build({
-    define: envs,
-    minify: true,
-    bundle: true,
-    sourcemap: true,
-    entryPoints: ['./modules/id.js'],
-    legalComments: 'none',
-    logLevel: 'info',
-    outfile: 'dist/iD.min.js',
-    target: browserslistToEsbuild(),
-  })
-  .catch(() => process.exit(1));
+const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
+
+await esbuild.build({
+  entryPoints: ['./modules/index.js'],
+  outfile: 'dist/iD.min.js',
+  bundle: true,
+  minify: true,
+  sourcemap: true,
+  format: 'esm',
+  platform: 'browser',
+  target: browserslistToEsbuild(),
+  external: ['lodash-es', 'whatwg-fetch', 'exifr', 'alif-toolkit', 'polygon-clipping'],
+  define: {
+    ...envs,
+    __VERSION__: JSON.stringify(pkg.version)
+  },
+  logLevel: 'info'
+});

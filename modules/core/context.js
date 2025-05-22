@@ -1,5 +1,5 @@
-import _debounce from 'lodash-es/debounce';
-import _throttle from 'lodash-es/throttle';
+import _debounce from 'lodash-es/debounce.js';
+import _throttle from 'lodash-es/throttle.js';
 
 import { dispatch as d3_dispatch } from 'd3-dispatch';
 import { json as d3_json } from 'd3-fetch';

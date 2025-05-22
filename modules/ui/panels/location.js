@@ -1,4 +1,4 @@
-import _debounce from 'lodash-es/debounce';
+import _debounce from 'lodash-es/debounce.js';
 
 import { decimalCoordinatePair, dmsCoordinatePair } from '../../util/units';
 import { t } from '../../core/localizer';

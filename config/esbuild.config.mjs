@@ -1,8 +1,9 @@
 import esbuild from 'esbuild';
-import fs from 'node:fs';
+import fs, {readFileSync} from 'node:fs';
 import parse from 'minimist';
 import envs from './envs.mjs';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
+const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
 
 let args = parse(process.argv.slice(2), {boolean: true});
 

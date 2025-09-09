@@ -163,6 +163,13 @@ export function svgTagClasses() {
             classes.push('tag-custom');
             classes.push('tag-custom-' + custom_tag);
         }
+        // Look for custom:visited tag
+        var visited = t['custom:visited'];
+        if (visited === 'yes') {
+            classes.push('tag-visited');
+        } else if (visited === 'no') {
+            classes.push('tag-unvisited');
+        }
 
         // ensure that classes for tags keys/values with special characters like spaces
         // are not added to the DOM, because it can cause bizarre issues (#9448)

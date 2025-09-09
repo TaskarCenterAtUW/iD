@@ -169,6 +169,8 @@ export function svgTagClasses() {
             classes.push('tag-visited');
         } else if (visited === 'no') {
             classes.push('tag-unvisited');
+        } else if (visited) {
+            classes.push('tag-visited-unknown');
         }
 
         // ensure that classes for tags keys/values with special characters like spaces

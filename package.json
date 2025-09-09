@@ -1,6 +1,6 @@
 {
   "name": "gaussian-id",
-  "version": "2.33.0",
+  "version": "2.33.1",
   "description": "A friendly editor for OpenStreetMap",
   "main": "dist/iD.min.js",
   "type": "module",

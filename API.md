@@ -350,6 +350,47 @@ iD.fileFetcher.cache().presets = {
 ```
 
 
+### Adding or updating presets at runtime
+
+While the `iD.fileFetcher.cache()` approach above only works *before* the iD context is
+created, presets can also be added, updated or removed on a *running* editor via
+`presetManager.updatePresets()` (also exported as `addPresets`, and reachable through
+`context.presets()`):
+
+```js
+iD.presetManager.updatePresets(
+    {
+        "demo/road_edge": {
+            name: "Road Edge",
+            geometry: ["line"],
+            tags: { "roadside:left": "yes" },       // used to match existing features
+            addTags: { "roadside:left": "yes" },    // applied when the preset is chosen
+            fields: ["demo/roadside_left"],
+            terms: ["roadside", "shoulder"]
+        }
+    },
+    // optional: custom fields, categories and defaults merge the same way
+    {
+        fields: {
+            "demo/roadside_left": {
+                key: "roadside:left",
+                type: "combo",
+                overrideLabel: "Roadside (left)",
+                options: ["yes", "no", "unknown"]
+            }
+        }
+    }
+);
+```
+
+- An existing preset/field ID is replaced (update); passing `null` as a definition removes it.
+- The definitions use the same shape as the id-tagging-schema JSON files.
+- The call waits for the base presets to finish loading, so it is safe to call at any
+  time; it returns a Promise resolving to the `presetManager` once applied.
+- Use `overrideLabel` to give runtime-added fields a literal display label (plain `label`
+  goes through the translation system).
+
+
 ### Minimum Editable Zoom
 
 The minimum zoom at which iD enters the edit mode is configured using the `context.minEditableZoom()` accessor. The default value is 16. To change this initialize the iD context as:

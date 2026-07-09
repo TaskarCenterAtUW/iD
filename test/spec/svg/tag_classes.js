@@ -274,4 +274,43 @@ describe('iD.svgTagClasses', function () {
             .call(iD.svgTagClasses());
         expect(selection.attr('class')).to.equal(null);
     });
+
+    it('adds classes for road-edge tags (`roadside:left=yes`)', function() {
+        selection
+            .datum(iD.osmEntity({tags: {highway: 'primary', 'roadside:left': 'yes'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('custom-roadside-left')).to.be.true;
+        expect(selection.classed('custom-roadside-left-yes')).to.be.true;
+    });
+
+    it('adds value-suffixed classes for each road-edge tag', function() {
+        selection
+            .datum(iD.osmEntity({tags: {
+                'paved_shoulder:right': 'yes',
+                'unpaved_shoulder:left': 'no',
+                'sideslope:right': 'unknown'
+            }}))
+            .call(iD.svgTagClasses());
+        expect(selection.classed('custom-paved_shoulder-right-yes')).to.be.true;
+        expect(selection.classed('custom-unpaved_shoulder-left-no')).to.be.true;
+        expect(selection.classed('custom-sideslope-right-unknown')).to.be.true;
+    });
+
+    it('removes stale road-edge classes when the tag is removed', function() {
+        selection
+            .datum(iD.osmEntity({tags: {highway: 'primary', 'roadside:left': 'yes'}}))
+            .call(iD.svgTagClasses());
+        selection
+            .datum(iD.osmEntity({tags: {highway: 'primary'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.attr('class')).to.not.contain('custom-roadside-left');
+        expect(selection.attr('class')).to.equal('tag-highway tag-highway-primary tag-paved');
+    });
+
+    it('adds no road-edge classes for unrelated or sideless keys', function() {
+        selection
+            .datum(iD.osmEntity({tags: {roadside: 'yes', 'sideslope:up': 'yes'}}))
+            .call(iD.svgTagClasses());
+        expect(selection.attr('class') || '').to.not.contain('custom-');
+    });
 });

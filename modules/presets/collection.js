@@ -21,6 +21,11 @@ export function presetCollection(collection) {
     return found;
   };
 
+  // discard memoized `item` lookups, e.g. after the collection is mutated
+  _this.clearItemMemo = () => {
+    _memo = {};
+  };
+
   _this.index = (id) => _this.collection.findIndex(d => d.id === id);
 
   _this.matchGeometry = (geometry) => {

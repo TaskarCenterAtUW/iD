@@ -146,6 +146,7 @@ export function presetIndex() {
 
     // Rebuild _this.collection after changing presets and categories
     _this.collection = Object.values(_presets).concat(Object.values(_categories));
+    _this.clearItemMemo();   // memoized lookups may now point at replaced presets
 
     // Merge Defaults
     if (d.defaults) {
@@ -189,6 +190,41 @@ export function presetIndex() {
 
     return _this;
   };
+
+
+  // Public API for adding, updating or removing presets at runtime.
+  //
+  // `presets` is an object of `presetID -> definition`, using the same shape
+  // as the id-tagging-schema JSON files, e.g.
+  //   {
+  //     'demo/road_edge': {
+  //       name: 'Road Edge',
+  //       geometry: ['line'],
+  //       tags: { 'roadside:left': 'yes' },
+  //       fields: ['demo/roadside_left']
+  //     }
+  //   }
+  // An existing presetID is replaced (update); passing `null` as the
+  // definition removes that preset.
+  //
+  // `options` may contain `fields`, `categories` and `defaults` objects which
+  // merge the same way (needed e.g. to define the custom fields a new preset
+  // references).
+  //
+  // Unlike `merge`, this waits for the base presets to finish loading first,
+  // so it is safe to call at any time. Returns a Promise resolving to the
+  // presetManager once the changes are applied.
+  _this.updatePresets = (presets, options = {}) => {
+    return _this.ensureLoaded().then(() => _this.merge({
+      presets: presets,
+      fields: options.fields,
+      categories: options.categories,
+      defaults: options.defaults
+    }));
+  };
+
+  // alias: reads better when only adding new presets
+  _this.addPresets = _this.updatePresets;
 
 
   _this.match = (entity, resolver) => {

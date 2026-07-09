@@ -50,10 +50,10 @@ export function svgTagClasses() {
             }
         }
 
-        // preserve base classes (nothing with `tag-`)
+        // preserve base classes (nothing with `tag-` or `custom-`, which are recomputed)
         var classes = value.trim().split(/\s+/)
             .filter(function(klass) {
-                return klass.length && !/^tag-/.test(klass);
+                return klass.length && !/^(tag|custom)-/.test(klass);
             })
             .map(function(klass) {  // special overrides for some perimeter strokes
                 return (klass === 'line' || klass === 'area') ? (overrideGeometry || klass) : klass;
@@ -163,6 +163,18 @@ export function svgTagClasses() {
             classes.push('tag-custom');
             classes.push('tag-custom-' + custom_tag);
         }
+        // Add classes for road-edge tags, e.g. `roadside:left=yes` ->
+        // `custom-roadside-left custom-roadside-left-yes`
+        // (`:` becomes `-` because classes with `:` are filtered out below)
+        var roadEdgeKey = /^(roadside|paved_shoulder|unpaved_shoulder|sideslope):(left|right|both)$/;
+        for (k in t) {
+            v = t[k];
+            if (!v || !roadEdgeKey.test(k)) continue;
+            var safeKey = 'highway-' + k.replace(/:/g, '-');
+            classes.push(safeKey);
+            classes.push(safeKey + '-' + v);
+        }
+
         // Look for custom:visited tag
         var visited = t['custom:visited'];
         if (visited === 'yes') {

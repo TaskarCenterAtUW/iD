@@ -97,6 +97,9 @@ export function coreContext() {
   context.history = () => _history;
   context.validator = () => _validator;
   context.uploader = () => _uploader;
+  // access to the preset manager, e.g. `context.presets().updatePresets(…)`
+  // to add, update or remove presets at runtime
+  context.presets = () => presetManager;
 
   /* Connection */
   context.preauth = (options) => {

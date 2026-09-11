@@ -170,6 +170,16 @@ export function svgTagClasses() {
             classes.push('tag-ext-data-change');
             classes.push('tag-ext-data-change-' + ext_data_tag);
         }
+        var ext_is_added = t['ext:addition'];
+        if (ext_is_added) {
+            classes.push('tag-ext-addition');
+            classes.push('tag-ext-addition-' + ext_is_added);
+        }
+        var ext_is_deleted = t['ext:deletion'];
+        if (ext_is_deleted) {
+            classes.push('tag-ext-deletion');
+            classes.push('tag-ext-deletion-' + ext_is_deleted);
+        }
         // Add classes for road-edge tags, e.g. `roadside:left=yes` ->
         // `custom-roadside-left custom-roadside-left-yes`
         // (`:` becomes `-` because classes with `:` are filtered out below)

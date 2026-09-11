@@ -163,6 +163,13 @@ export function svgTagClasses() {
             classes.push('tag-custom');
             classes.push('tag-custom-' + custom_tag);
         }
+        // If the data has changed according to the `ext:data_change` tag, add a class for that.
+        // This is part of proviso project.
+        var ext_data_tag = t['ext:data_change'];
+        if (ext_data_tag) {
+            classes.push('tag-ext-data-change');
+            classes.push('tag-ext-data-change-' + ext_data_tag);
+        }
         // Add classes for road-edge tags, e.g. `roadside:left=yes` ->
         // `custom-roadside-left custom-roadside-left-yes`
         // (`:` becomes `-` because classes with `:` are filtered out below)

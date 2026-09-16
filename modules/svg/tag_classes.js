@@ -180,6 +180,19 @@ export function svgTagClasses() {
             classes.push('tag-ext-deletion');
             classes.push('tag-ext-deletion-' + ext_is_deleted);
         }
+        // Road element types for adding specific Road elements (WA-proviso project)
+        var element_type = t['element_type'];
+        if (element_type) {
+            classes.push('tag-element-type');
+            classes.push('tag-element-type-' + element_type);
+        }
+
+        var lane_marking_type = t['lane_marking_type'];
+        if (lane_marking_type) {
+            classes.push('tag-lane-marking-type');
+            classes.push('tag-lane-marking-type-' + lane_marking_type);
+        }
+
         // Add classes for road-edge tags, e.g. `roadside:left=yes` ->
         // `custom-roadside-left custom-roadside-left-yes`
         // (`:` becomes `-` because classes with `:` are filtered out below)

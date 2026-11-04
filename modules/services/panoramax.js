@@ -10,12 +10,8 @@ import { t, localizer } from '../core/localizer';
 import pannellumPhotoFrame from './pannellum_photo';
 import planePhotoFrame from './plane_photo';
 
-const apiUrl = 'https://api.panoramax.xyz/';
-const tileUrl = apiUrl + 'api/map/{z}/{x}/{y}.mvt';
-const imageDataUrl = apiUrl + 'api/collections/{collectionId}/items/{itemId}';
-const userIdUrl = apiUrl + 'api/users/search?q={username}';
-const usernameURL = apiUrl + 'api/users/{userId}';
-const viewerUrl = apiUrl;
+const defaultApiUrl = 'https://api.panoramax.xyz/';
+let apiUrl = defaultApiUrl;
 
 const highDefinition = 'hd';
 const standardDefinition = 'sd';
@@ -224,7 +220,7 @@ function loadTileDataToCache(data, tile, zoom) {
  * @returns the username
  */
 async function getUsername(user_id){
-    const requestUrl = usernameURL.replace('{userId}', user_id);
+    const requestUrl = apiUrl + 'api/users/' + user_id;
 
     const response = await fetch(requestUrl, { method: 'GET' });
     if (!response.ok) {
@@ -235,8 +231,13 @@ async function getUsername(user_id){
 }
 
 export default {
-    init: function() {
-        if (!_cache) {
+    init: function(options = {}) {
+        const configuredUrl = options.panoramaxApiUrl || defaultApiUrl;
+        const nextApiUrl = configuredUrl.replace(/\/+$/, '') + '/';
+        const urlChanged = apiUrl !== nextApiUrl;
+        apiUrl = nextApiUrl;
+
+        if (!_cache || urlChanged) {
             this.reset();
         }
 
@@ -283,7 +284,7 @@ export default {
      * @param {*} projection Current Projection
      */
     loadImages: function(projection) {
-        loadTiles('images', tileUrl, imageMinZoom, projection);
+        loadTiles('images', apiUrl + 'api/map/{z}/{x}/{y}.mvt', imageMinZoom, projection);
     },
 
     /**
@@ -291,7 +292,7 @@ export default {
      * @param {*} projection Current Projection
      */
     loadLines: function(projection, zoom) {
-        loadTiles('line', tileUrl, lineMinZoom, projection, zoom);
+        loadTiles('line', apiUrl + 'api/map/{z}/{x}/{y}.mvt', lineMinZoom, projection, zoom);
     },
 
     /**
@@ -301,7 +302,7 @@ export default {
      */
     getUserIds: async function(usernames) {
         const requestUrls = usernames.map(username =>
-            userIdUrl.replace('{username}', username));
+            apiUrl + 'api/users/search?q=' + username);
 
         const responses = await Promise.all(requestUrls.map(requestUrl =>
             fetch(requestUrl, { method: 'GET' })));
@@ -442,7 +443,7 @@ export default {
         that.setActiveImage(d);
         that.updateUrlImage(d.id);
 
-        const viewerLink = `${viewerUrl}#pic=${d.id}&focus=pic`;
+        const viewerLink = `${apiUrl}#pic=${d.id}&focus=pic`;
 
         let viewer = context.container()
             .select('.photoviewer');
@@ -512,7 +513,7 @@ export default {
             .attr('class', 'image-link')
             .attr('target', '_blank')
             .attr('href', viewerLink)
-            .text('panoramax.xyz');
+            .text(new URL(apiUrl).host);
 
         this.getImageData(d.sequence_id, d.id).then(function(data){
             _currentScene = {
@@ -586,8 +587,7 @@ export default {
      * @returns The fetched image data
      */
     getImageData: async function(collection_id, image_id){
-        const requestUrl = imageDataUrl.replace('{collectionId}', collection_id)
-            .replace('{itemId}', image_id);
+        const requestUrl = apiUrl + 'api/collections/' + collection_id + '/items/' + image_id;
 
         const response = await fetch(requestUrl, { method: 'GET' });
         if (!response.ok) {

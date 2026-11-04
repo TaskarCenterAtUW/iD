@@ -246,6 +246,20 @@ delete iD.services.mapillary;
 ```
 
 
+### Panoramax API URL
+
+Pass `panoramaxApiUrl` when initializing iD to use a custom Panoramax instance:
+
+```js
+const context = iD.coreContext();
+context.init({ panoramaxApiUrl: 'https://panoramax.example.com/' });
+```
+
+The URL is the instance's base URL, before `api/`. A trailing slash is optional.
+Tiles, image metadata, user lookups, and viewer links use this URL.
+When omitted, it defaults to `https://api.panoramax.xyz/`.
+Services are shared across contexts, so this setting applies to the shared Panoramax service.
+
 ### Background Imagery
 
 iD's background imagery database is stored in the `iD.fileFetcher.cache().imagery` array and can be

@@ -78,6 +78,60 @@ describe('iD.servicePanoramax', function() {
         });
     });
 
+    describe('custom API URL', function() {
+        ['https://photos.example.com/panoramax', 'https://photos.example.com/panoramax/'].forEach(baseUrl => {
+            it('uses the configured URL for requests: ' + baseUrl, async function() {
+                const fetchStub = sinon.stub(globalThis, 'fetch').resolves({
+                    ok: true,
+                    json: () => Promise.resolve({ features: [{ name: 'alice', id: 'user1' }] }),
+                    arrayBuffer: () => Promise.resolve(new ArrayBuffer(0))
+                });
+
+                try {
+                    context.init({ panoramaxApiUrl: baseUrl });
+                    await panoramax.getImageData('collection1', 'image1');
+                    const ids = await panoramax.getUserIds(['alice']);
+                    panoramax.loadImages(context.projection);
+                    panoramax.loadLines(context.projection, 14);
+
+                    const urls = fetchStub.getCalls().map(call => call.args[0]);
+                    expect(urls).to.include('https://photos.example.com/panoramax/api/collections/collection1/items/image1');
+                    expect(urls).to.include('https://photos.example.com/panoramax/api/users/search?q=alice');
+                    expect(ids).to.eql(['user1']);
+                    expect(urls.filter(url => url.includes('/api/map/'))).to.have.length.above(0);
+                    expect(urls.every(url => url.startsWith('https://photos.example.com/panoramax/api/'))).to.be.true;
+                } finally {
+                    fetchStub.restore();
+                }
+            });
+        });
+
+        it('restores the default URL when initialization has no configuration', async function() {
+            const fetchStub = sinon.stub(globalThis, 'fetch').resolves({ ok: true, json: () => Promise.resolve({}) });
+            try {
+                context.init({ panoramaxApiUrl: 'https://photos.example.com/' });
+                context.init();
+                await panoramax.getImageData('collection1', 'image1');
+                expect(fetchStub.firstCall.args[0]).to.eql('https://api.panoramax.xyz/api/collections/collection1/items/image1');
+            } finally {
+                fetchStub.restore();
+            }
+        });
+
+        it('clears cached data and aborts tile requests when the instance changes', function() {
+            const cache = panoramax.cache();
+            const request = { abort: sinon.spy() };
+            cache.requests.inflight.tile = request;
+            cache.images.forImageId.foo = { id: 'foo' };
+
+            context.init({ panoramaxApiUrl: 'https://photos.example.com/' });
+
+            expect(request.abort).to.have.been.calledOnce;
+            expect(panoramax.cachedImage('foo')).to.be.undefined;
+            expect(panoramax.cache()).to.not.equal(cache);
+        });
+    });
+
     describe('#reset', function() {
         it('resets cache and image', function() {
             panoramax.cache().foo = 'bar';

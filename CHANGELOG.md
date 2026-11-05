@@ -35,6 +35,16 @@ _Breaking developer changes, which may affect downstream projects or sites that 
 [@xxxx]: https://github.com/xxxx
 -->
 
+# v2.34.3
+##### 2026-Nov-04
+
+#### :camera: Street-Level
+* Allow embedding applications to configure a custom Panoramax API base URL with `context.init({ panoramaxApiUrl })`. Panoramax tiles, image metadata, user lookups, and viewer links now use the configured instance.
+
+#### :hammer: Development
+* Publish `gaussian-id` to npm automatically after a pull request is merged into the `2.x` branch.
+
+
 # v2.33.0
 
 #### :sparkles: Usability & Accessibility

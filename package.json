@@ -1,6 +1,6 @@
 {
   "name": "gaussian-id",
-  "version": "2.34.0",
+  "version": "2.34.3",
   "description": "A friendly editor for OpenStreetMap",
   "main": "dist/iD.min.js",
   "type": "module",
@@ -18,9 +18,9 @@
     "config",
     "svg"
   ],
-  "repository": "github:openstreetmap/iD",
-  "homepage": "https://github.com/openstreetmap/iD",
-  "bugs": "https://github.com/openstreetmap/iD/issues",
+  "repository": "github:TaskarCenterAtUW/iD",
+  "homepage": "https://github.com/TaskarCenterAtUW/iD",
+  "bugs": "https://github.com/TaskarCenterAtUW/iD/issues",
   "keywords": [
     "editor",
     "openstreetmap"

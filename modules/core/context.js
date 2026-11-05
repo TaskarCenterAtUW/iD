@@ -505,7 +505,7 @@ export function coreContext() {
 
 
   /* Init */
-  context.init = () => {
+  context.init = (options = {}) => {
 
     instantiateInternal();
 
@@ -559,7 +559,7 @@ export function coreContext() {
 
       Object.values(services).forEach(service => {
         if (service && typeof service.init === 'function') {
-          service.init();
+          service.init(options);
         }
       });
 

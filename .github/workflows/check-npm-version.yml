@@ -1,0 +1,42 @@
+name: Check npm package version
+
+on:
+  pull_request:
+    branches:
+      - 2.x
+
+permissions:
+  contents: read
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Require an unpublished package version
+        shell: bash
+        run: |
+          package_name=$(node -p "require('./package.json').name")
+          local_version=$(node -p "require('./package.json').version")
+          published_version=$(npm view "$package_name" version 2>/dev/null || true)
+
+          echo "Package: $package_name"
+          echo "Local version: $local_version"
+          echo "Latest published version: ${published_version:-not published}"
+
+          if npm view "$package_name@$local_version" version >/dev/null 2>&1; then
+            echo "::error title=Package version already published::$package_name@$local_version already exists on npm. Update the version in package.json and package-lock.json."
+            exit 1
+          fi
+
+          echo "$package_name@$local_version is not published yet."
